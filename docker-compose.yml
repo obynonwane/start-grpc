@@ -1,0 +1,26 @@
+services:
+  broker-service:
+    build:
+      context: ../broker-service
+      dockerfile: ../broker-service/Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    deploy:
+      mode: replicated
+      replicas: 1
+    env_file:
+      - .env
+    volumes:
+      - ../broker-service:/app # Only for development
+
+  logger-service:
+    build:
+      context: ../logger-service
+      dockerfile: ../logger-service/Dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    env_file:
+      - .env
